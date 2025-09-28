@@ -1,0 +1,15 @@
+# Grammar rules for C-like language
+int -> type_decl
+main -> function_name
+( -> open_paren
+) -> close_paren
+{ -> open_brace
+} -> close_brace
+= -> assignment_op
++ -> binary_op
+- -> binary_op
+* -> binary_op
+/ -> binary_op
+; -> statement_end
+[0-9]+ -> number
+[a-zA-Z_][a-zA-Z0-9_]* -> identifier

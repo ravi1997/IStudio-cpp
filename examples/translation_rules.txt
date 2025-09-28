@@ -1,0 +1,7 @@
+# Translation rules from C to pseudo-assembly
+C -> ASM: convert variable declarations to memory allocations
+C -> ASM: convert assignments to load/store operations
+C -> ASM: convert arithmetic operations to assembly instructions
+C -> ASM: convert function calls to stack operations
+C -> WASM: convert C code to WebAssembly instructions
+C -> LLVM: convert C code to LLVM IR

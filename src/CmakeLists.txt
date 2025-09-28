@@ -1,0 +1,5 @@
+set(SRC_FILES
+src/Symbol.cpp
+src/main.cpp
+PARENT_SCOPE
+)
