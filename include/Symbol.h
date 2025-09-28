@@ -38,6 +38,8 @@ public:
 
     void addSymbol(std::shared_ptr<Symbol> symbol);
     std::shared_ptr<Symbol> findSymbol(const std::string& name) const;
+    void clear();
+    std::vector<std::shared_ptr<Symbol>> getAllSymbols() const;
 
 private:
     std::unordered_map<std::string, std::shared_ptr<Symbol>> symbols_;

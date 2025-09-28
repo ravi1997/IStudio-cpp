@@ -49,3 +49,18 @@ std::shared_ptr<Symbol> SymbolTable::findSymbol(const std::string& name) const
     }
     return nullptr;
 }
+
+void SymbolTable::clear()
+{
+    symbols_.clear();
+}
+
+std::vector<std::shared_ptr<Symbol>> SymbolTable::getAllSymbols() const
+{
+    std::vector<std::shared_ptr<Symbol>> results;
+    results.reserve(symbols_.size());
+    for (const auto& entry : symbols_) {
+        results.push_back(entry.second);
+    }
+    return results;
+}
