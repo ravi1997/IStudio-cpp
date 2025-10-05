@@ -1,0 +1,9 @@
+module demo.decorators;
+
+import core.io;
+
+@log
+@metrics("latency")
+function process(string payload) : void {
+  print(payload);
+}

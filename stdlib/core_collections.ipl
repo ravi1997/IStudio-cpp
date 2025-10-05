@@ -1,0 +1,27 @@
+function listCreate() : list {
+  return null;
+}
+
+function listPush(list values, any value) : list {
+  return values;
+}
+
+function listPop(list values) : any {
+  return null;
+}
+
+function listLength(list values) : number {
+  return 0;
+}
+
+function dictCreate() : dict {
+  return null;
+}
+
+function dictGet(dict table, any key) : any {
+  return null;
+}
+
+function dictSet(dict table, any key, any value) : dict {
+  return table;
+}

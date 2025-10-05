@@ -1,0 +1,9 @@
+module demo.whileloop;
+
+function countdown(number start) : number {
+  let value = start;
+  while (value > 0) {
+    value = value - 1;
+  }
+  return value;
+}

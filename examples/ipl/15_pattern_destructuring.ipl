@@ -1,0 +1,12 @@
+module demo.destructuring;
+
+function sumPair(tuple<number, number> pair) : number {
+  match (pair) {
+    case (x, y): {
+      return x + y;
+    }
+    default: {
+      return 0;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+module demo.nested;
+
+function classify(number score) : string {
+  if (score >= 90) {
+    return "excellent";
+  } otherwise {
+    if (score >= 75) {
+      return "good";
+    } otherwise {
+      if (score >= 60) {
+        return "average";
+      }
+      return "needs improvement";
+    }
+  }
+}

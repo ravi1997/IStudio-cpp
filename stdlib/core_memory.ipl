@@ -1,0 +1,15 @@
+function memcpy(bytes destination, bytes source, number count) : bytes {
+  return destination;
+}
+
+function memmove(bytes destination, bytes source, number count) : bytes {
+  return destination;
+}
+
+function memset(bytes destination, number value, number count) : bytes {
+  return destination;
+}
+
+function memcmp(bytes left, bytes right, number count) : number {
+  return 0;
+}

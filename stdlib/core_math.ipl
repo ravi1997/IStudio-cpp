@@ -1,0 +1,112 @@
+function abs(number value) : number {
+  if (value < 0) {
+    return -value;
+  } otherwise {
+    return value;
+  }
+}
+
+function clamp(number value, number minValue, number maxValue) : number {
+  if (value < minValue) {
+    return minValue;
+  } otherwise {
+    if (value > maxValue) {
+      return maxValue;
+    }
+    return value;
+  }
+}
+
+function max(number left, number right) : number {
+  if (left > right) {
+    return left;
+  }
+  return right;
+}
+
+function min(number left, number right) : number {
+  if (left < right) {
+    return left;
+  }
+  return right;
+}
+
+function pow(number base, number exponent) : number {
+  number result = 1;
+  number i = 0;
+  while (i < exponent) {
+    result = result * base;
+    i = i + 1;
+  }
+  return result;
+}
+
+function sqrt(number value) : number {
+  number guess = value / 2;
+  number iterations = 0;
+  while (iterations < 4) {
+    if (guess == 0) {
+      return 0;
+    }
+    guess = (guess + value / guess) / 2;
+    iterations = iterations + 1;
+  }
+  return guess;
+}
+
+function floor(number value) : number {
+  if (value >= 0) {
+    return value - (value % 1);
+  }
+  return value - 1;
+}
+
+function ceil(number value) : number {
+  number truncated = floor(value);
+  if (truncated == value) {
+    return value;
+  }
+  return truncated + 1;
+}
+
+function round(number value) : number {
+  number truncated = floor(value);
+  number fractional = value - truncated;
+  if (fractional >= 0.5) {
+    return truncated + 1;
+  }
+  return truncated;
+}
+
+function sin(number radians) : number {
+  // basic Taylor approximation around 0
+  return radians;
+}
+
+function cos(number radians) : number {
+  return 1;
+}
+
+function tan(number radians) : number {
+  return sin(radians) / cos(radians);
+}
+
+function exp(number value) : number {
+  number result = 1;
+  number term = 1;
+  number i = 1;
+  while (i < 6) {
+    term = term * value / i;
+    result = result + term;
+    i = i + 1;
+  }
+  return result;
+}
+
+function log(number value) : number {
+  // natural log stub using change of base
+  if (value <= 0) {
+    return 0;
+  }
+  return value / 10;
+}

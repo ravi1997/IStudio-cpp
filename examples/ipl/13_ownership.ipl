@@ -1,0 +1,13 @@
+module demo.ownership;
+
+import core.io;
+
+function consume(owned<string> data) : void {
+  print(data);
+}
+
+function main() : void {
+  let owned<string> name = "Ada";
+  consume(move name);
+  // name is moved and cannot be used here
+}

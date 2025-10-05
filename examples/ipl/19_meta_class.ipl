@@ -1,0 +1,12 @@
+module demo.meta;
+
+meta class Singleton : type {
+  static let instance Self? = null;
+
+  static function get() : Self {
+    if (instance == null) {
+      instance = new Self();
+    }
+    return instance;
+  }
+}

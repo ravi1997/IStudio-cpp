@@ -1,0 +1,17 @@
+module demo.traits;
+
+trait Auditable {
+  function toAuditRecord() : string;
+}
+
+class Session implements Auditable {
+  string id = "";
+
+  function new(string id) {
+    this.id = id;
+  }
+
+  function toAuditRecord() : string {
+    return "session:" + this.id;
+  }
+}

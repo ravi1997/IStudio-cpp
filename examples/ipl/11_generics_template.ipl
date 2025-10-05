@@ -1,0 +1,13 @@
+module demo.generics;
+
+template <T> function swap(ref T a, ref T b) : void {
+  let temp = a;
+  a = b;
+  b = temp;
+}
+
+function main() : void {
+  let first = 1;
+  let second = 2;
+  swap(first, second);
+}

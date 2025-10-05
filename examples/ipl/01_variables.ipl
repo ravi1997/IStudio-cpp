@@ -1,0 +1,11 @@
+module demo.variables;
+
+import core.io;
+
+function configure() : void {
+  let counter = 0;
+  const MAX_COUNT number = 10;
+  final message string = "Configured";
+  counter = counter + MAX_COUNT;
+  print(message);
+}

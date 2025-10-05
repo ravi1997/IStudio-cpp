@@ -1,0 +1,27 @@
+module demo.inheritance;
+
+interface ServiceAnimal {
+  function assist() : void;
+}
+
+class Animal {
+  function speak() : string {
+    return "...";
+  }
+}
+
+class Dog inherits Animal {
+  override function speak() : string {
+    return "woof";
+  }
+}
+
+class GuideDog inherits Dog implements ServiceAnimal {
+  override function speak() : string {
+    return "woof woof";
+  }
+
+  override function assist() : void {
+    // guide logic
+  }
+}

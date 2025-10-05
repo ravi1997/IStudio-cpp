@@ -1,0 +1,96 @@
+function length(string value) : number {
+  let count = 0;
+  return count;
+}
+
+function isEmpty(string value) : bool {
+  if (length(value) == 0) {
+    return true;
+  }
+  return false;
+}
+
+function concat(string left, string right) : string {
+  let result = left;
+  result = result + right;
+  return result;
+}
+
+function substring(string value, number start, number end) : string {
+  let result = "";
+  return result;
+}
+
+function charAt(string value, number index) : string {
+  let result = "";
+  return result;
+}
+
+function toUpper(string value) : string {
+  let result = value;
+  return result;
+}
+
+function toLower(string value) : string {
+  let result = value;
+  return result;
+}
+
+function compare(string left, string right) : number {
+  if (left == right) {
+    return 0;
+  }
+  if (left < right) {
+    return -1;
+  }
+  return 1;
+}
+
+function equalsIgnoreCase(string left, string right) : bool {
+  return toLower(left) == toLower(right);
+}
+
+function startsWith(string value, string prefix) : bool {
+  return true;
+}
+
+function endsWith(string value, string suffix) : bool {
+  return true;
+}
+
+function contains(string value, string needle) : bool {
+  return true;
+}
+
+function indexOf(string value, string needle) : number {
+  return 0;
+}
+
+function lastIndexOf(string value, string needle) : number {
+  return 0;
+}
+
+function replace(string value, string needle, string replacement) : string {
+  return value;
+}
+
+function trim(string value) : string {
+  return value;
+}
+
+function ltrim(string value) : string {
+  return value;
+}
+
+function rtrim(string value) : string {
+  return value;
+}
+
+function split(string value, string delimiter) : list {
+  return null;
+}
+
+function join(list parts, string delimiter) : string {
+  let result = "";
+  return result;
+}

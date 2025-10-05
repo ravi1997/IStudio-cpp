@@ -1,0 +1,27 @@
+function isAlpha(string ch) : bool {
+  return false;
+}
+
+function isDigit(string ch) : bool {
+  return false;
+}
+
+function isAlnum(string ch) : bool {
+  return isAlpha(ch) || isDigit(ch);
+}
+
+function isLower(string ch) : bool {
+  return false;
+}
+
+function isUpper(string ch) : bool {
+  return false;
+}
+
+function toUpperChar(string ch) : string {
+  return ch;
+}
+
+function toLowerChar(string ch) : string {
+  return ch;
+}

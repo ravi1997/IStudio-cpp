@@ -1,0 +1,4 @@
+function bad() : void {
+  let value = 10;
+  value = value $ 2;
+}

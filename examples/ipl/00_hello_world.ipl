@@ -1,0 +1,9 @@
+module demo.hello;
+
+import core.io;
+
+function main() : number {
+  const greeting string = "Hello, IPL!";
+  print(greeting);
+  return 0;
+}

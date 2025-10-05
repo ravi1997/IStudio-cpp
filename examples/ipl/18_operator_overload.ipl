@@ -1,0 +1,13 @@
+module demo.operators;
+
+class Currency {
+  let value number = 0;
+
+  function new(number value) {
+    this.value = value;
+  }
+}
+
+operator "+"(Currency a, Currency b) : Currency {
+  return new Currency(a.value + b.value);
+}

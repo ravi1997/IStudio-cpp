@@ -1,0 +1,8 @@
+module demo.contracts;
+
+contract function divide(number numerator, number denominator) : number {
+  require denominator != 0; error "Cannot divide by zero";
+  ensure result * denominator == numerator;
+
+  return numerator / denominator;
+}

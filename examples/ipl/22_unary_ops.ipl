@@ -1,0 +1,9 @@
+module demo.unary;
+
+function negate(number value) : number {
+  return -value;
+}
+
+function logical(bool flag) : bool {
+  return !flag;
+}

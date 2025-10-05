@@ -1,0 +1,15 @@
+module demo.interfaces;
+
+interface Drawable {
+  function draw() : void;
+}
+
+class Button implements Drawable {
+  function draw() : void {
+    renderRectangle();
+  }
+}
+
+function renderRectangle() : void {
+  // platform call
+}

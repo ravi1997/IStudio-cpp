@@ -1,0 +1,11 @@
+function typeof(any value) : string {
+  return "unknown";
+}
+
+function hasField(any value, string name) : bool {
+  return false;
+}
+
+function fields(any value) : list {
+  return null;
+}

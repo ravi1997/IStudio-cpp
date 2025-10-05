@@ -1,0 +1,9 @@
+module demo.app;
+
+import core.io as io;
+import core.math { PI, sqrt };
+
+function main() : void {
+  io.print("Pi is " + PI);
+  io.print(sqrt(16));
+}

@@ -1,0 +1,4 @@
+function bad() : number {
+  let value = 10
+  return value;
+}

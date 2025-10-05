@@ -14,10 +14,16 @@ enum class ASTNodeType {
     VariableDeclaration,
     Assignment,
     BinaryOperation,
+    UnaryOperation,
+    CallExpression,
     Literal,
     Identifier,
     Block,
-    Return
+    Return,
+    ExpressionStatement,
+    If,
+    While,
+    For
 };
 
 struct FunctionParameter {
@@ -139,6 +145,38 @@ private:
     std::unique_ptr<ASTNode> right_;
 };
 
+// Unary operation node
+class UnaryOperationNode : public ASTNode {
+public:
+    UnaryOperationNode(const std::string& op, std::unique_ptr<ASTNode> operand)
+        : ASTNode(ASTNodeType::UnaryOperation), op_(op), operand_(std::move(operand)) {}
+
+    void print(int indent = 0) const override;
+
+    const std::string& getOperator() const { return op_; }
+    const ASTNode* getOperand() const { return operand_.get(); }
+
+private:
+    std::string op_;
+    std::unique_ptr<ASTNode> operand_;
+};
+
+// Function call node
+class CallExpressionNode : public ASTNode {
+public:
+    CallExpressionNode(std::unique_ptr<ASTNode> callee, std::vector<std::unique_ptr<ASTNode>> arguments)
+        : ASTNode(ASTNodeType::CallExpression), callee_(std::move(callee)), arguments_(std::move(arguments)) {}
+
+    void print(int indent = 0) const override;
+
+    const ASTNode* getCallee() const { return callee_.get(); }
+    const std::vector<std::unique_ptr<ASTNode>>& getArguments() const { return arguments_; }
+
+private:
+    std::unique_ptr<ASTNode> callee_;
+    std::vector<std::unique_ptr<ASTNode>> arguments_;
+};
+
 // Literal node
 class LiteralNode : public ASTNode {
 public:
@@ -198,4 +236,84 @@ public:
 
 private:
     std::unique_ptr<ASTNode> value_;
+};
+
+// Expression statement node
+class ExpressionStatementNode : public ASTNode {
+public:
+    explicit ExpressionStatementNode(std::unique_ptr<ASTNode> expression)
+        : ASTNode(ASTNodeType::ExpressionStatement), expression_(std::move(expression)) {}
+
+    void print(int indent = 0) const override;
+
+    const ASTNode* getExpression() const { return expression_.get(); }
+
+private:
+    std::unique_ptr<ASTNode> expression_;
+};
+
+// If statement node
+class IfNode : public ASTNode {
+public:
+    IfNode(std::unique_ptr<ASTNode> condition,
+           std::unique_ptr<ASTNode> thenBranch,
+           std::unique_ptr<ASTNode> elseBranch)
+        : ASTNode(ASTNodeType::If),
+          condition_(std::move(condition)),
+          thenBranch_(std::move(thenBranch)),
+          elseBranch_(std::move(elseBranch)) {}
+
+    void print(int indent = 0) const override;
+
+    const ASTNode* getCondition() const { return condition_.get(); }
+    const ASTNode* getThenBranch() const { return thenBranch_.get(); }
+    const ASTNode* getElseBranch() const { return elseBranch_.get(); }
+
+private:
+    std::unique_ptr<ASTNode> condition_;
+    std::unique_ptr<ASTNode> thenBranch_;
+    std::unique_ptr<ASTNode> elseBranch_;
+};
+
+// While statement node
+class WhileNode : public ASTNode {
+public:
+    WhileNode(std::unique_ptr<ASTNode> condition, std::unique_ptr<ASTNode> body)
+        : ASTNode(ASTNodeType::While), condition_(std::move(condition)), body_(std::move(body)) {}
+
+    void print(int indent = 0) const override;
+
+    const ASTNode* getCondition() const { return condition_.get(); }
+    const ASTNode* getBody() const { return body_.get(); }
+
+private:
+    std::unique_ptr<ASTNode> condition_;
+    std::unique_ptr<ASTNode> body_;
+};
+
+// For statement node (C-style)
+class ForNode : public ASTNode {
+public:
+    ForNode(std::unique_ptr<ASTNode> init,
+            std::unique_ptr<ASTNode> condition,
+            std::unique_ptr<ASTNode> increment,
+            std::unique_ptr<ASTNode> body)
+        : ASTNode(ASTNodeType::For),
+          init_(std::move(init)),
+          condition_(std::move(condition)),
+          increment_(std::move(increment)),
+          body_(std::move(body)) {}
+
+    void print(int indent = 0) const override;
+
+    const ASTNode* getInit() const { return init_.get(); }
+    const ASTNode* getCondition() const { return condition_.get(); }
+    const ASTNode* getIncrement() const { return increment_.get(); }
+    const ASTNode* getBody() const { return body_.get(); }
+
+private:
+    std::unique_ptr<ASTNode> init_;
+    std::unique_ptr<ASTNode> condition_;
+    std::unique_ptr<ASTNode> increment_;
+    std::unique_ptr<ASTNode> body_;
 };

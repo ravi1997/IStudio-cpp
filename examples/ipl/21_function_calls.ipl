@@ -1,0 +1,11 @@
+module demo.calls;
+
+function square(number value) : number {
+  return value * value;
+}
+
+function compute() : number {
+  let total = 0;
+  total = square(2) + square(3) + square(4);
+  return total;
+}

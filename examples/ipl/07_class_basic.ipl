@@ -1,0 +1,17 @@
+module demo.objects;
+
+import core.math;
+
+class Vector2 {
+  number x = 0;
+  number y = 0;
+
+  function new(number x, number y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  function magnitude() : number {
+    return sqrt(this.x * this.x + this.y * this.y);
+  }
+}

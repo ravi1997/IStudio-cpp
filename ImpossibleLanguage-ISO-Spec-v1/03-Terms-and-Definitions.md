@@ -1,0 +1,25 @@
+# 03 — Terms and Definitions (Normative)
+
+- **implementation**: a translator (compiler/interpreter), runtime, and standard library for IPL.
+- **conforming implementation**: an implementation that satisfies all "shall/must" requirements.
+- **conforming program**: a program that uses only defined and implementation‑defined behaviors.
+- **undefined behavior (UB)**: execution for which this standard imposes no requirements.
+- **implementation-defined**: choices left to implementations but which must be documented.
+- **diagnostic**: a message issued by an implementation to report a violation or situation.
+- **contract**: preconditions and postconditions attached to a function or method.
+- **lifetime**: the duration for which a storage location is valid.
+- **module**: a compilation unit that exports declarations for use by other units.
+- **meta-class**: a class whose instances are classes; enables runtime introspection and meta-programming.
+- **interface**: an abstract type that defines method signatures without implementation; supports multiple inheritance of type.
+- **trait**: a collection of method signatures and default implementations that can be mixed into classes.
+- **ownership**: a memory management concept where each value has a single owner that controls its lifetime.
+- **borrowing**: the act of temporarily accessing a value without taking ownership.
+- **nullable type**: a type that can hold either a value of the base type or null (e.g., `T?`).
+- **const**: compile-time constant value that cannot be changed after initialization.
+- **final**: runtime constant value that cannot be changed after initialization.
+- **optional parameter**: a function parameter that has a default value and may be omitted at call site.
+- **concept**: a named set of constraints that defines requirements for generic type parameters.
+- **generic**: a type or function parameterized over other types.
+- **template**: a generic construct that is instantiated at compile time with specific type arguments.
+- **matrix**: a two-dimensional array of values supporting mathematical matrix operations.
+- **ownership transfer**: the movement of resources from one variable to another, leaving the source invalid.

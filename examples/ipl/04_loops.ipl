@@ -1,0 +1,26 @@
+module demo.loops;
+
+import core.io;
+
+function iterate(list<number> values) : number {
+  let sum = 0;
+  for (let i = 0; i < values.length; i = i + 1) {
+    sum = sum + values[i];
+  }
+
+  let count = 0;
+  while (count < 3) {
+    sum = sum + count;
+    count = count + 1;
+  }
+
+  repeat {
+    sum = sum + 1;
+  } until (sum > 50);
+
+  return sum;
+}
+
+function main() : void {
+  print(iterate([1, 2, 3, 4]));
+}

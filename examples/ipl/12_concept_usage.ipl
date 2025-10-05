@@ -1,0 +1,11 @@
+module demo.concepts;
+
+concept Addable = Arithmetic and Copyable;
+
+template <T: Addable> function addAll(list<T> values) : T {
+  let total = values[0];
+  for (let i = 1; i < values.length; i = i + 1) {
+    total = total + values[i];
+  }
+  return total;
+}

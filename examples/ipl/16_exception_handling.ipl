@@ -1,0 +1,15 @@
+module demo.exceptions;
+
+function risky() : void {
+  throw Error("boom");
+}
+
+function main() : void {
+  try {
+    risky();
+  } catch (Error e) {
+    log(e.message);
+  } finally {
+    cleanup();
+  }
+}

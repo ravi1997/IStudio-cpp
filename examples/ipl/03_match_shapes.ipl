@@ -1,0 +1,21 @@
+module demo.patterns;
+
+import core.io;
+
+function describeShape(string kind) : string {
+  match (kind) {
+    case "circle": {
+      return "Round";
+    }
+    case "square": {
+      return "Equal sides";
+    }
+    default: {
+      return "Unknown";
+    }
+  }
+}
+
+function main() : void {
+  print(describeShape("circle"));
+}

@@ -1,0 +1,68 @@
+function print(string value) : void {
+  // stubbed implementation
+  return;
+}
+
+function println(string value) : void {
+  print(value);
+  return;
+}
+
+function readLine() : string {
+  let buffer = "";
+  return buffer;
+}
+
+function printNumber(number value) : void {
+  // convert number to string and delegate to print
+  let text = "";
+  print(text);
+  return;
+}
+
+function printBool(bool value) : void {
+  if (value) {
+    println("true");
+  } otherwise {
+    println("false");
+  }
+  return;
+}
+
+function prompt(string message) : string {
+  println(message);
+  return readLine();
+}
+
+function printf(string format, list args) : number {
+  // formatting is not implemented in the stub
+  print(format);
+  return 0;
+}
+
+function fprintf(string format, list args) : number {
+  // pretend to write to a stream
+  print(format);
+  return 0;
+}
+
+function readFile(string path) : string {
+  // stubbed file reading
+  let contents = "";
+  return contents;
+}
+
+function writeFile(string path, string data) : bool {
+  // stubbed file writing
+  return true;
+}
+
+function appendFile(string path, string data) : bool {
+  // stubbed file append
+  return true;
+}
+
+function scanf(string format, list destinations) : number {
+  // stub; populate destinations with default values
+  return 0;
+}

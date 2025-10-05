@@ -1,0 +1,155 @@
+# Impossible Programming Language (IPL) — Complete EBNF Grammar
+# Derived from ImpossibleLanguage-ISO-Spec-v1/20-Annextures-EBNF-and-Formal-Grammar.md
+# All productions are normative; comments (starting with #) are informative.
+
+program         = { module-decl | import-decl | declaration } ;
+
+declaration     = var-decl | const-decl | final-decl | func-decl | class-decl | interface-decl |
+                  trait-decl | meta-class-decl | operator-decl | template-decl | concept-decl |
+                  contract-func ;
+
+var-decl        = "let" [ type ] identifier "=" expression ";" ;
+const-decl      = "const" [ type ] identifier "=" constexpr-expression ";" ;
+final-decl      = "final" [ type ] identifier "=" expression ";" ;
+
+func-decl       = [ "export" ] [ decorator-list ] [ "static" ] "function" identifier "(" [ param-list ] ")"
+                  [ ":" type ] [ contract-clauses ] block ;
+contract-func   = [ "export" ] [ decorator-list ] "contract" "function" identifier "(" [ param-list ] ")"
+                  [ ":" type ] contract-body ;
+contract-body   = "{" { contract-clause } statement* "}" ;
+contract-clause = "require" expression [ "error" string ] ";" |
+                  "ensure" expression [ "error" string ] ";" |
+                  "invariant" expression [ "error" string ] ";" ;
+contract-clauses = "{" { contract-clause } "}" ;
+decorator-list  = { decorator } ;
+decorator       = "@" identifier [ "(" [ argument-list ] ")" ] ;
+
+class-decl      = [ "export" ] [ decorator-list ] "class" identifier [ inheritance-spec ] class-body ;
+inheritance-spec = ( "inherits" identifier { "," identifier } ) |
+                  ( "implements" identifier { "," identifier } ) |
+                  ( "inherits" identifier { "," identifier } "implements" identifier { "," identifier } ) ;
+interface-decl  = [ "export" ] "interface" identifier interface-body ;
+interface-body  = "{" { interface-method } "}" ;
+interface-method = [ "static" ] [ type ] identifier "(" [ param-list ] ")" ";" ;
+trait-decl      = [ "export" ] "trait" identifier trait-body ;
+trait-body      = "{" { trait-method } "}" ;
+trait-method    = [ "static" ] [ type ] identifier "(" [ param-list ] ")" [ block ] ";" ;
+meta-class-decl = [ "export" ] "meta" "class" identifier ":" "type" class-body ;
+
+operator-decl   = [ "export" ] [ decorator-list ] "operator" operator-symbol "(" param-list ")"
+                  [ ":" type ] block ;
+operator-symbol = "+" | "-" | "*" | "/" | "%" | "^" | "==" | "!=" | "<" | "<=" | ">" | ">=" |
+                  "[]" | "()" | "=" | "+=" | "-=" | "*=" | "/=" | "%=" | "^=" | "&=" |
+                  "|=" | "<<=" | ">>=" | "<<" | ">>" | "&" | "*" | "!" | "->" | "**" |
+                  ".*" | "./" | custom-op ;
+custom-op       = "«" identifier "»" ;
+
+template-decl   = "template" "<" type-params ">" declaration ;
+type-params     = type-param { "," type-param } ;
+type-param      = identifier [ ":" constraint ] ;
+constraint      = identifier | concept-constraint ;
+concept-constraint = identifier "(" constraint-expr ")" ;
+concept-decl    = "concept" identifier "=" constraint-expression ;
+constraint-expression = type-constraint { "and" type-constraint } ;
+type-constraint = "Copyable" | "Comparable" | "Arithmetic" | "LessThanComparable" | interface-identifier ;
+
+module-decl     = "module" identifier { "." identifier } ";" ;
+import-decl     = "import" identifier { "." identifier } [ "as" identifier ] ";" |
+                  "import" identifier { "." identifier } "{" identifier { "," identifier } "}" ";" ;
+
+param-list      = param { "," param } ;
+param           = [ "const" ] [ "ref" | "owned" | "borrowed" ] [ type ] identifier [ "?" ] [ "=" expression ] ;
+
+class-body      = "{" { member-decl | interface-impl } "}" ;
+member-decl     = field | method | ctor | dtor | static-block ;
+field           = [ visibility ] [ "static" ] [ "const" | "final" ] [ type ] identifier [ "=" expression ] ";" ;
+method          = [ visibility ] [ "static" ] [ "virtual" | "override" | "final" ] "function"
+                  identifier "(" [ param-list ] ")" [ ":" type ] [ contract-clauses ] block ;
+ctor            = [ visibility ] "function" "new" "(" [ param-list ] ")" [ ":" init-list ] block ;
+dtor            = [ visibility ] "function" "delete" "(" ")" block ;
+static-block    = "static" "{" { statement } "}" ;
+interface-impl  = "function" identifier "(" [ param-list ] ")" [ ":" type ] block ;
+init-list       = member-init { "," member-init } ;
+member-init     = identifier "(" expression ")" ;
+visibility      = "public" | "private" | "protected" | "internal" ;
+
+block           = "{" { statement } "}" ;
+statement       = block | var-decl | const-decl | final-decl | expr-stmt | if-stmt | match-stmt | while-stmt |
+                  repeat-stmt | for-stmt | for-each-stmt | for-each-kv-stmt | return-stmt | break-stmt |
+                  continue-stmt | try-stmt | throw-stmt | unsafe-stmt | owned-stmt ;
+expr-stmt       = expression ";" ;
+if-stmt         = "if" "(" expression ")" block [ "otherwise" block ] ;
+match-stmt      = "match" "(" expression ")" "{" { "case" pattern ":" block } [ "default" ":" block ] "}" ;
+while-stmt      = "while" "(" expression ")" block ;
+repeat-stmt     = "repeat" block "until" "(" expression ")" ";" ;
+for-stmt        = "for" "(" [ for-init ] ";" [ expression ] ";" [ for-update ] ")" block ;
+for-each-stmt   = "for" "each" identifier "in" expression block ;
+for-each-kv-stmt = "for" "each" "(" identifier "," identifier ")" "in" expression block ;
+return-stmt     = "return" [ expression ] ";" ;
+break-stmt      = "break" [ identifier ] ";" ;
+continue-stmt   = "continue" [ identifier ] ";" ;
+try-stmt        = "try" block "catch" "(" [ type ] identifier ")" block [ "finally" block ] ;
+throw-stmt      = "throw" expression ";" ;
+unsafe-stmt     = "unsafe" block ;
+owned-stmt      = "owned" "(" identifier ")" block ;
+
+for-init        = var-decl | expr-stmt ;
+for-update      = expression ;
+pattern         = literal | identifier | "_" | "(" pattern { "," pattern } ")" |
+                  constructor "(" [ pattern { "," pattern } ] ")" ;
+
+constructor     = identifier ;
+
+# Types
+
+type            = [ "owned" | "borrowed" | "ref" ] primary-type [ "?" ] ;
+primary-type    = identifier [ "<" type { "," type } ">" ] ;
+
+constexpr-expression = expression ;
+
+# Expressions
+
+expression      = assignment ;
+assignment      = ownership-transfer |
+                  (identifier "=" expression) |
+                  (expression "?" expression ":" expression) ;
+ownership-transfer = "move" expression | "ref" expression | "&" expression | "*" expression ;
+conditional     = logic-or ;
+logic-or        = logic-and { "or" logic-and } ;
+logic-and       = equality { "and" equality } ;
+equality        = relational { ( "==" | "!=" ) relational } ;
+relational      = shift { ( "<" | "<=" | ">" | ">=" ) shift } ;
+shift           = additive { ( "<<" | ">>" ) additive } ;
+additive        = multiplicative { ( "+" | "-" ) multiplicative } ;
+multiplicative  = exponent { ( "*" | "/" | "%" | "**" | ".*" | "./" ) exponent } ;
+exponent        = unary { "^" unary } ;
+unary           = ( "!" | "-" | "+" | "&" | "*" ) unary | postfix ;
+postfix         = primary { call | index | matrix-index | member } ;
+call            = "(" [ argument-list ] ")" ;
+index           = "[" expression "]" ;
+matrix-index    = "[" expression "," expression "]" ;
+member          = "." identifier ;
+primary         = identifier |
+                  literal |
+                  "(" expression ")" |
+                  "new" type "(" [ argument-list ] ")" |
+                  "[" [ expression { "," expression } ] "]" |
+                  "[" [ "[" expression { "," expression } "]" { "," "[" expression { "," expression } "]" } ] "]" |
+                  "(" expression { "," expression } ")" |
+                  "match" "(" expression ")" "{" { "case" pattern ":" expression }
+                  [ "default" ":" expression ] "}" ;
+argument-list   = expression { "," expression } ;
+
+literal         = integer | decimal | string | "true" | "false" | "null" | raw-string ;
+integer         = [ "-" ] digit { digit } ;
+decimal         = [ "-" ] digit { digit } "." digit { digit } ;
+string          = '"' { character | escape-sequence } '"' ;
+raw-string      = "r" '"' { character } '"' ;
+
+character       = ? any Unicode scalar value except control characters and quotes ? ;
+escape-sequence = "\\\" | "\\\\" | "\\n" | "\\t" | "\\u" hex-digit hex-digit hex-digit hex-digit ;
+hex-digit       = digit | "A".."F" | "a".."f" ;
+digit           = "0".."9" ;
+identifier      = letter { letter | digit | "_" } ;
+letter          = UnicodeLetter ;
+

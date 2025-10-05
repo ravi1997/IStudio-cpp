@@ -1,0 +1,3 @@
+function bad() : void {
+  let message = "Hello;
+}

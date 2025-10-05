@@ -1,0 +1,12 @@
+module demo.controlflow;
+
+function classify(number value) : string {
+  if (value > 0) {
+    return "positive";
+  } otherwise {
+    if (value == 0) {
+      return "zero";
+    }
+    return "negative";
+  }
+}
