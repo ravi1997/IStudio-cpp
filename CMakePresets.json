@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "cmake": {
+        "configureArgs": [
+            "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+        ],
+        "useCMakePresets": "always"
+    },
+    "buildPresets": [
+        {
+            "name": "Release",
+            "configurePreset": "default",
+            "configuration": "Release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "test",
+            "configurePreset": "default",
+            "configuration": "Release"
+        }
+    ],
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default Config",
+            "description": "Default build configuration",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}

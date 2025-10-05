@@ -661,6 +661,15 @@ bool Compiler::compileInternal(std::string_view source,
     indexAST(*ast);
     printSymbolSummary();
 
+    // Apply translation rules if provided
+    if (!translationRules.empty() && verbose_) {
+        std::cout << "\nTranslation rules applied:\n";
+        for (const auto& rule : translationRules) {
+            std::cout << "  " << rule.from_language << " -> " << rule.to_language 
+                      << ": " << rule.rule << std::endl;
+        }
+    }
+
     return true;
 }
 
@@ -724,10 +733,75 @@ void Compiler::indexAST(const ASTNode& node)
         }
         break;
     }
+    case ASTNodeType::UnaryOperation: {
+        const auto& unary = static_cast<const UnaryOperationNode&>(node);
+        if (const auto* operand = unary.getOperand()) {
+            indexAST(*operand);
+        }
+        break;
+    }
+    case ASTNodeType::CallExpression: {
+        const auto& call = static_cast<const CallExpressionNode&>(node);
+        if (const auto* callee = call.getCallee()) {
+            indexAST(*callee);
+        }
+        for (const auto& arg : call.getArguments()) {
+            if (arg) {
+                indexAST(*arg);
+            }
+        }
+        break;
+    }
     case ASTNodeType::Return: {
         const auto& ret = static_cast<const ReturnNode&>(node);
         if (const auto* value = ret.getValue()) {
             indexAST(*value);
+        }
+        break;
+    }
+    case ASTNodeType::ExpressionStatement: {
+        const auto& exprStmt = static_cast<const ExpressionStatementNode&>(node);
+        if (const auto* expr = exprStmt.getExpression()) {
+            indexAST(*expr);
+        }
+        break;
+    }
+    case ASTNodeType::If: {
+        const auto& ifNode = static_cast<const IfNode&>(node);
+        if (const auto* condition = ifNode.getCondition()) {
+            indexAST(*condition);
+        }
+        if (const auto* thenBranch = ifNode.getThenBranch()) {
+            indexAST(*thenBranch);
+        }
+        if (const auto* elseBranch = ifNode.getElseBranch()) {
+            indexAST(*elseBranch);
+        }
+        break;
+    }
+    case ASTNodeType::While: {
+        const auto& whileNode = static_cast<const WhileNode&>(node);
+        if (const auto* condition = whileNode.getCondition()) {
+            indexAST(*condition);
+        }
+        if (const auto* body = whileNode.getBody()) {
+            indexAST(*body);
+        }
+        break;
+    }
+    case ASTNodeType::For: {
+        const auto& forNode = static_cast<const ForNode&>(node);
+        if (const auto* init = forNode.getInit()) {
+            indexAST(*init);
+        }
+        if (const auto* condition = forNode.getCondition()) {
+            indexAST(*condition);
+        }
+        if (const auto* increment = forNode.getIncrement()) {
+            indexAST(*increment);
+        }
+        if (const auto* body = forNode.getBody()) {
+            indexAST(*body);
         }
         break;
     }

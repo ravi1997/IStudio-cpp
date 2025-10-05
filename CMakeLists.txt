@@ -165,7 +165,9 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run_ipl_suite.sh)
         COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run_ipl_suite.sh
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Running IPL test suite"
+        VERBATIM
     )
+    set_target_properties(test_suite PROPERTIES EXCLUDE_FROM_ALL TRUE)
 endif()
 
 # Create a custom target for running sample tests  
@@ -174,14 +176,27 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test_ipl_samples.sh)
         COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test_ipl_samples.sh
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Running IPL sample tests"
+        VERBATIM
     )
+    set_target_properties(sample_tests PROPERTIES EXCLUDE_FROM_ALL TRUE)
 endif()
 
 # Create a custom target for installation
 add_custom_target(install-all
     COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target install
     COMMENT "Installing all targets"
+    VERBATIM
 )
+set_target_properties(install-all PROPERTIES EXCLUDE_FROM_ALL TRUE)
+
+# Add a test target that can also be used for testing
+if(BUILD_TESTING AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run_ipl_suite.sh)
+    enable_testing()
+    add_test(NAME ipl_test_suite
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run_ipl_suite.sh
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+endif()
 
 # Installation summary message
 message(STATUS "IStudio ${PROJECT_VERSION} Configuration:")
