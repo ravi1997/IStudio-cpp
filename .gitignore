@@ -1,3 +1,6 @@
 /IStudio.code-workspace
 /build
 /lib
+
+.gemini/
+gha-creds-*.json
