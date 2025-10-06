@@ -91,6 +91,39 @@ The installation includes:
 - `sample_tests` - Run sample IPL tests
 - `install` - Install the project
 - `install-all` - Build and install everything
+- `test_suite` - Run full test suite script
+
+## Running Tests
+
+The project includes a comprehensive test suite using CTest:
+
+```bash
+# Build the project and run all tests
+cmake --build .
+ctest
+
+# Run tests with more verbose output
+ctest --verbose
+
+# Run specific tests
+ctest -R "ipl_help_test"  # Run only the help test
+
+# Run tests excluding specific ones
+ctest -E "ipl_full_suite_test"
+
+# Run with BUILD_TESTING enabled
+cmake -DBUILD_TESTING=ON .
+ctest
+```
+
+### Test Categories
+
+The test suite includes:
+- **Basic functionality tests**: Help, version, basic operation
+- **Lexing tests**: Tokenization of valid IPL samples
+- **Compilation tests**: Both valid and invalid programs
+- **Expected failure tests**: Invalid programs that should fail to compile
+- **Integration tests**: Full test suite scripts
 
 ## Project Structure
 

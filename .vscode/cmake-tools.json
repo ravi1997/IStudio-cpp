@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "generator": "Unix Makefiles",
+            "cmakeToolchainFile": "",
+            "buildRoot": "${workspaceFolder}/build",
+            "cmakeCommandArgs": [
+                "-DBUILD_TESTING=ON"
+            ],
+            "ctestCommandArgs": [
+                "--verbose"
+            ]
+        }
+    ],
+    "version": 2
+}

@@ -35,6 +35,8 @@ private:
     void visitWhile(const WhileNode& node);
     void visitFor(const ForNode& node);
 
+    TypePtr checkExpressionType(const ASTNode& expr);
+
     void pushScope();
     void popScope();
 
@@ -47,6 +49,7 @@ private:
     SymbolScope::Ptr currentScope_;
     DiagnosticEngine* diagnostics_{nullptr};
     bool success_{true};
+    bool hasReturnStatement_{false};
 };
 
 } // namespace istudio::semantic

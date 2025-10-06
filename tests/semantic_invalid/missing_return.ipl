@@ -1,0 +1,7 @@
+module test;
+import core.io;
+
+function main() : int {
+    let x : int = 5;
+    // Missing return statement - should cause error for non-void function
+}

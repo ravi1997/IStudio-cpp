@@ -1,0 +1,12 @@
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/IStudio.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/ipl_compiler.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/test_suite.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/sample_tests.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/install-all.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/test.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/edit_cache.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/rebuild_cache.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/list_install_components.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/install.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/install/local.dir
+/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/install/strip.dir

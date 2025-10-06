@@ -13,10 +13,20 @@ enum class SymbolKind {
     Function
 };
 
+enum class OwnershipKind {
+    Unknown,
+    Owned,
+    Borrowed,
+    Reference
+};
+
 struct Symbol {
     std::string name;
     SymbolKind kind{SymbolKind::Variable};
     TypePtr type;
+    OwnershipKind ownership{OwnershipKind::Unknown};
+    bool isInitialized{false};
+    bool hasMoved{false};
 };
 
 class SymbolScope : public std::enable_shared_from_this<SymbolScope> {

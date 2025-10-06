@@ -1,0 +1,35 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "generator": "Unix Makefiles",
+            "configurationType": "Release",
+            "buildRoot": "${workspaceFolder}/build",
+            "installRoot": "${workspaceFolder}/install",
+            "cmakeCommandArgs": "",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": "",
+            "inheritEnvironments": [ "linux_x64" ],
+            "environments": [
+                {
+                    "environment": "linux_x64",
+                    "MYPATH": "/usr/local/bin"
+                }
+            ],
+            "intelliSenseMode": "linux-gcc-x64",
+            "variables": [
+                {
+                    "name": "BUILD_TESTING",
+                    "value": "ON"
+                }
+            ]
+        }
+    ],
+    "testings": [
+        {
+            "name": "CTest",
+            "args": ["--verbose"]
+        }
+    ],
+    "version": 3
+}

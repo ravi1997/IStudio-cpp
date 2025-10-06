@@ -1,34 +1,16 @@
 {
-    "version": "2.0.0",
-    "cmake": {
-        "configureArgs": [
-            "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-        ],
-        "useCMakePresets": "always"
-    },
-    "buildPresets": [
-        {
-            "name": "Release",
-            "configurePreset": "default",
-            "configuration": "Release"
-        }
-    ],
-    "testPresets": [
-        {
-            "name": "test",
-            "configurePreset": "default",
-            "configuration": "Release"
-        }
-    ],
+    "version": 8,
     "configurePresets": [
         {
-            "name": "default",
-            "displayName": "Default Config",
-            "description": "Default build configuration",
-            "generator": "Unix Makefiles",
-            "binaryDir": "${sourceDir}/build",
+            "name": "test",
+            "displayName": "GCC 14.2.0 x86_64-linux-gnu",
+            "description": "Using compilers: C = /usr/bin/gcc-14, CXX = /usr/bin/g++-14",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "/usr/bin/gcc-14",
+                "CMAKE_CXX_COMPILER": "/usr/bin/g++-14",
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         }
     ]

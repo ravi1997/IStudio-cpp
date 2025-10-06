@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-552dacf67a135354a543.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.28.3"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "IStudio",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "IStudio::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-IStudio-Debug-9ebd3d17768a226cbfde.json",
+					"name" : "IStudio",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "install-all::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-install-all-Debug-0e7fd361eb2f20fe25af.json",
+					"name" : "install-all",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ipl_compiler::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ipl_compiler-Debug-834171d50cdc53e51885.json",
+					"name" : "ipl_compiler",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sample_tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sample_tests-Debug-356cd532c83004bbaedb.json",
+					"name" : "sample_tests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_suite::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_suite-Debug-554f508e9e66faa6b1cc.json",
+					"name" : "test_suite",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file",
+		"source" : "/home/ravi/workspace/IStudio"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

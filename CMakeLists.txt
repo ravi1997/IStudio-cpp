@@ -39,6 +39,8 @@ add_executable(IStudio
     src/semantic/Type.cpp
     src/semantic/SymbolTable.cpp
     src/semantic/SemanticAnalyzer.cpp
+    src/ir/IR.cpp
+    src/ir/Lowering.cpp
 )
 
 # Define the ipl_compiler executable
@@ -154,10 +156,11 @@ export(EXPORT IStudioTargets
 option(BUILD_TESTING "Build tests" OFF)
 if(BUILD_TESTING)
     enable_testing()
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests)
-        add_subdirectory(tests)
-    endif()
 endif()
+
+# Enable testing framework
+include(CTest)
+enable_testing()
 
 # Create a custom target for running tests
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run_ipl_suite.sh)
@@ -189,14 +192,79 @@ add_custom_target(install-all
 )
 set_target_properties(install-all PROPERTIES EXCLUDE_FROM_ALL TRUE)
 
-# Add a test target that can also be used for testing
-if(BUILD_TESTING AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run_ipl_suite.sh)
-    enable_testing()
-    add_test(NAME ipl_test_suite
+# Define test cases using CTest framework
+
+# Test basic functionality of IStudio
+add_test(NAME ipl_help_test
+    COMMAND $<TARGET_FILE:IStudio> --help
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+add_test(NAME ipl_version_test
+    COMMAND $<TARGET_FILE:IStudio> --version
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# Test lexing of valid samples
+add_test(NAME ipl_sample_lex_test
+    COMMAND $<TARGET_FILE:IStudio> --lex-ipl-samples
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# Test with a simple valid program (with required grammar file)
+add_test(NAME ipl_simple_compile_test
+    COMMAND $<TARGET_FILE:IStudio> compile examples/ipl/00_hello_world.ipl --grammar examples/grammar_rules.txt --translation examples/translation_rules.txt
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# Define expected failures for invalid programs
+add_test(NAME ipl_invalid_unterminated_string
+    COMMAND $<TARGET_FILE:IStudio> compile examples/ipl_invalid/00_unterminated_string.ipl
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+set_property(TEST ipl_invalid_unterminated_string PROPERTY WILL_FAIL TRUE)
+
+add_test(NAME ipl_invalid_unknown_character
+    COMMAND $<TARGET_FILE:IStudio> compile examples/ipl_invalid/01_unknown_character.ipl
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+set_property(TEST ipl_invalid_unknown_character PROPERTY WILL_FAIL TRUE)
+
+add_test(NAME ipl_invalid_missing_paren
+    COMMAND $<TARGET_FILE:IStudio> compile examples/ipl_invalid/02_missing_paren.ipl
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+set_property(TEST ipl_invalid_missing_paren PROPERTY WILL_FAIL TRUE)
+
+add_test(NAME ipl_invalid_missing_semicolon
+    COMMAND $<TARGET_FILE:IStudio> compile examples/ipl_invalid/03_missing_semicolon.ipl
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+set_property(TEST ipl_invalid_missing_semicolon PROPERTY WILL_FAIL TRUE)
+
+# Add test for demo functionality\nadd_test(NAME ipl_demo_test\n    COMMAND $<TARGET_FILE:IStudio> --demo\n    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}\n)\nset_tests_properties(ipl_demo_test PROPERTIES FIXTURES_REQUIRED demo_files)\n\n# Add tests for stdin functionality\nadd_test(NAME ipl_stdin_test\n    COMMAND bash -c \"echo 'module test; import core.io; function main() { print(\\\"Hello\\\"); }' | $<TARGET_FILE:IStudio> --stdin --grammar examples/grammar_rules.txt --translation examples/translation_rules.txt\"\n    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}\n)\n\n# Add tests for various valid programs\nadd_test(NAME ipl_variables_test\n    COMMAND $<TARGET_FILE:IStudio> compile examples/ipl/01_variables.ipl --grammar examples/grammar_rules.txt --translation examples/translation_rules.txt\n    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}\n)\n\nadd_test(NAME ipl_control_flow_test\n    COMMAND $<TARGET_FILE:IStudio> compile examples/ipl/02_control_flow_if.ipl --grammar examples/grammar_rules.txt --translation examples/translation_rules.txt\n    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}\n)\n\nadd_test(NAME ipl_function_contracts_test\n    COMMAND $<TARGET_FILE:IStudio> compile examples/ipl/05_function_contracts.ipl --grammar examples/grammar_rules.txt --translation examples/translation_rules.txt\n    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}\n)
+
+# Custom test script targets as tests
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run_ipl_suite.sh)
+    add_test(NAME ipl_full_suite_test
         COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/run_ipl_suite.sh
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
 endif()
+
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test_ipl_samples.sh)
+    add_test(NAME ipl_samples_test
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test_ipl_samples.sh
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+endif()
+
+# Set test timeout (120 seconds)
+set_tests_properties(
+    ipl_full_suite_test
+    ipl_samples_test
+    PROPERTIES TIMEOUT 120
+)
 
 # Installation summary message
 message(STATUS "IStudio ${PROJECT_VERSION} Configuration:")

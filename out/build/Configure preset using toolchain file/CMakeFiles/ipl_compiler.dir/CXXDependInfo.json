@@ -1,0 +1,50 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file",
+	"dir-cur-src" : "/home/ravi/workspace/IStudio",
+	"dir-top-bld" : "/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file",
+	"dir-top-src" : "/home/ravi/workspace/IStudio",
+	"exports" : 
+	[
+		{
+			"cxx-module-info-dir" : "",
+			"destination" : "lib/cmake/IStudio",
+			"export-name" : "ipl_compiler",
+			"export-prefix" : "/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/Export/8c2f2a4f91b82a50a3c02ab62c965f7d",
+			"filesystem-export-name" : "ipl__compiler",
+			"install" : true,
+			"namespace" : "IStudio::"
+		},
+		{
+			"cxx-module-info-dir" : "",
+			"destination" : "/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file",
+			"export-name" : "ipl_compiler",
+			"export-prefix" : "/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file",
+			"filesystem-export-name" : "ipl__compiler",
+			"install" : false,
+			"namespace" : "IStudio::"
+		}
+	],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"/home/ravi/workspace/IStudio/include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/home/ravi/workspace/IStudio/out/build/Configure preset using toolchain file/CMakeFiles/ipl_compiler.dir",
+	"sources" : 
+	{
+		"CMakeFiles/ipl_compiler.dir/src/ipl_compiler/ipl_compiler.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/ravi/workspace/IStudio/src/ipl_compiler/ipl_compiler.cpp"
+		}
+	}
+}

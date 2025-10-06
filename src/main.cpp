@@ -19,6 +19,8 @@
 #include "istudio/Diagnostics.h"
 #include "istudio/Lexer.h"
 #include "istudio/Token.h"
+#include "ir/Lowering.h"
+#include "ir/IR.h"
 namespace {
 
 struct DemoConfig {
@@ -353,6 +355,7 @@ struct CommandLineOptions {
     bool useStdin{false};
     bool legacyCompile{false};
     bool emitSema{false};
+    bool emitIr{false};
     std::string command{};
     std::string sourceFile{};
     std::string grammarFile{};
@@ -398,6 +401,10 @@ CommandLineOptions parseCommandLine(int argc, char* argv[])
         }
         if (arg == "--emit-sema") {
             opts.emitSema = true;
+            continue;
+        }
+        if (arg == "--emit-ir") {
+            opts.emitIr = true;
             continue;
         }
         if (arg == "--grammar" || arg == "-g") {
@@ -512,6 +519,7 @@ void printUsage(const std::string& executable)
               << "  --standard, -s <name>    Select grammar standard (e.g. ipl)\n"
               << "  --output, -o <path>      Output path for future phases (currently informational)\n"
               << "  --emit-sema              Run semantic analysis and print symbol summary\n"
+              << "  --emit-ir                Emit intermediate representation (planned feature)\n"
               << "  --lex-ipl-samples        Tokenize bundled IPL samples\n";
 }
 
@@ -523,8 +531,8 @@ void printVersion()
 } // namespace
 class Compiler {
 public:
-    explicit Compiler(bool verbose = false, bool emitSemanticSummary = false)
-        : verbose_(verbose), emitSemanticSummary_(emitSemanticSummary) {}
+    explicit Compiler(bool verbose = false, bool emitSemanticSummary = false, bool emitIr = false)
+        : verbose_(verbose), emitSemanticSummary_(emitSemanticSummary), emitIr_(emitIr) {}
     ~Compiler() = default;
 
     bool compile(const std::string& source);
@@ -545,6 +553,7 @@ private:
     SymbolTable symbolTable_;
     bool verbose_{false};
     bool emitSemanticSummary_{false};
+    bool emitIr_{false};
 };
 
 bool Compiler::compile(const std::string& source)
@@ -661,16 +670,7 @@ bool Compiler::compileInternal(std::string_view source,
     indexAST(*ast);
     printSymbolSummary();
 
-    // Apply translation rules if provided
-    if (!translationRules.empty() && verbose_) {
-        std::cout << "\nTranslation rules applied:\n";
-        for (const auto& rule : translationRules) {
-            std::cout << "  " << rule.from_language << " -> " << rule.to_language 
-                      << ": " << rule.rule << std::endl;
-        }
-    }
-
-    return true;
+    // Apply translation rules if provided\n    if (!translationRules.empty() && verbose_) {\n        std::cout << \"\\nTranslation rules applied:\\n\";\n        for (const auto& rule : translationRules) {\n            std::cout << \"  \" << rule.from_language << \" -> \" << rule.to_language \n                      << \": \" << rule.rule << std::endl;\n        }\n    }\n\n    // Emit IR if requested (placeholder - IR system not yet implemented)\n    if (emitIr_) {\n        std::cout << \"\\nIntermediate Representation (IR) emission:\\n\";\n        std::cout << \"  [Note: IR system is planned for future implementation]\\n\";\n        std::cout << \"  [IR would be generated from AST with type annotations]\\n\";\n        std::cout << \"  [See docs/roadmap_semantic_ir_codegen.md for details]\\n\";\n    }\n\n    return true;
 }
 
 void Compiler::indexAST(const ASTNode& node)
@@ -904,7 +904,7 @@ int main(int argc, char* argv[])
                   << options.outputPath << std::endl;
     }
 
-    Compiler compiler(options.verbose, options.emitSema);
+    Compiler compiler(options.verbose, options.emitSema, options.emitIr);
 
     auto resolveOrDefaultGrammar = [&](const std::string& overridePath) {
         if (!overridePath.empty()) {

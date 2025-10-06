@@ -1,0 +1,12 @@
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/IStudio.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/ipl_compiler.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/test_suite.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/sample_tests.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/install-all.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/test.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/edit_cache.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/rebuild_cache.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/list_install_components.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/install.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/install/local.dir
+/home/ravi/workspace/IStudio/out/build/test/CMakeFiles/install/strip.dir
