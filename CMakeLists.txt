@@ -41,6 +41,8 @@ add_executable(IStudio
     src/semantic/SemanticAnalyzer.cpp
     src/ir/IR.cpp
     src/ir/Lowering.cpp
+    src/codegen/GenericCodeGenerator.cpp
+    src/codegen/RuleParser.cpp
 )
 
 # Define the ipl_compiler executable

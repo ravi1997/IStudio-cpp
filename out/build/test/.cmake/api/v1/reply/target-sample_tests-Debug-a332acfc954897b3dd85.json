@@ -18,13 +18,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 188,
+				"line" : 180,
 				"parent" : 0
 			}
 		]
 	},
-	"id" : "install-all::@6890427a1f51a3e7e1df",
-	"name" : "install-all",
+	"id" : "sample_tests::@6890427a1f51a3e7e1df",
+	"name" : "sample_tests",
 	"paths" : 
 	{
 		"build" : ".",
@@ -52,13 +52,13 @@
 		{
 			"backtrace" : 1,
 			"isGenerated" : true,
-			"path" : "out/build/test/CMakeFiles/install-all",
+			"path" : "out/build/test/CMakeFiles/sample_tests",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "out/build/test/CMakeFiles/install-all.rule",
+			"path" : "out/build/test/CMakeFiles/sample_tests.rule",
 			"sourceGroupIndex" : 1
 		}
 	],

@@ -254,6 +254,34 @@ CMakeFiles/IStudio.dir/src/ir/Lowering.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IStudio.dir/src/ir/Lowering.cpp.s"
 	/usr/bin/g++-14 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ravi/workspace/IStudio/src/ir/Lowering.cpp -o CMakeFiles/IStudio.dir/src/ir/Lowering.cpp.s
 
+CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o: CMakeFiles/IStudio.dir/flags.make
+CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o: /home/ravi/workspace/IStudio/src/codegen/GenericCodeGenerator.cpp
+CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o: CMakeFiles/IStudio.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ravi/workspace/IStudio/out/build/test/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o"
+	/usr/bin/g++-14 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o -MF CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o.d -o CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o -c /home/ravi/workspace/IStudio/src/codegen/GenericCodeGenerator.cpp
+
+CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.i"
+	/usr/bin/g++-14 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ravi/workspace/IStudio/src/codegen/GenericCodeGenerator.cpp > CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.i
+
+CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.s"
+	/usr/bin/g++-14 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ravi/workspace/IStudio/src/codegen/GenericCodeGenerator.cpp -o CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.s
+
+CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o: CMakeFiles/IStudio.dir/flags.make
+CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o: /home/ravi/workspace/IStudio/src/codegen/RuleParser.cpp
+CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o: CMakeFiles/IStudio.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ravi/workspace/IStudio/out/build/test/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o"
+	/usr/bin/g++-14 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o -MF CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o.d -o CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o -c /home/ravi/workspace/IStudio/src/codegen/RuleParser.cpp
+
+CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.i"
+	/usr/bin/g++-14 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ravi/workspace/IStudio/src/codegen/RuleParser.cpp > CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.i
+
+CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.s"
+	/usr/bin/g++-14 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ravi/workspace/IStudio/src/codegen/RuleParser.cpp -o CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.s
+
 # Object files for target IStudio
 IStudio_OBJECTS = \
 "CMakeFiles/IStudio.dir/src/main.cpp.o" \
@@ -268,7 +296,9 @@ IStudio_OBJECTS = \
 "CMakeFiles/IStudio.dir/src/semantic/SymbolTable.cpp.o" \
 "CMakeFiles/IStudio.dir/src/semantic/SemanticAnalyzer.cpp.o" \
 "CMakeFiles/IStudio.dir/src/ir/IR.cpp.o" \
-"CMakeFiles/IStudio.dir/src/ir/Lowering.cpp.o"
+"CMakeFiles/IStudio.dir/src/ir/Lowering.cpp.o" \
+"CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o" \
+"CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o"
 
 # External object files for target IStudio
 IStudio_EXTERNAL_OBJECTS =
@@ -286,10 +316,12 @@ IStudio: CMakeFiles/IStudio.dir/src/semantic/SymbolTable.cpp.o
 IStudio: CMakeFiles/IStudio.dir/src/semantic/SemanticAnalyzer.cpp.o
 IStudio: CMakeFiles/IStudio.dir/src/ir/IR.cpp.o
 IStudio: CMakeFiles/IStudio.dir/src/ir/Lowering.cpp.o
+IStudio: CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o
+IStudio: CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o
 IStudio: CMakeFiles/IStudio.dir/build.make
 IStudio: CMakeFiles/IStudio.dir/compiler_depend.ts
 IStudio: CMakeFiles/IStudio.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/ravi/workspace/IStudio/out/build/test/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable IStudio"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/ravi/workspace/IStudio/out/build/test/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable IStudio"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/IStudio.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

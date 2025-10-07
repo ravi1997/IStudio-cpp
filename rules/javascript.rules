@@ -1,0 +1,56 @@
+# JavaScript Code Generation Rules
+# Format: [NodeType]
+# template=...
+# mappings=...
+
+[Program]
+template={{PROLOGUE}}{{BODY}}{{EPILOGUE}}
+mappings=
+
+[Function]
+template=function {{NAME}}({{PARAMS}}) {{BODY}}
+mappings=
+
+[VariableDeclaration]
+template=let {{NAME}} = {{INIT_VALUE}};
+mappings=int=number,float=number,double=number,bool=boolean,string=string
+
+[Assignment]
+template={{VARIABLE}} = {{VALUE}};
+mappings=
+
+[BinaryOperation]
+template={{LEFT}} {{OPERATOR}} {{RIGHT}}
+mappings=
+
+[UnaryOperation]
+template={{OPERATOR}}{{OPERAND}}
+mappings=
+
+[CallExpression]
+template={{CALLEE}}({{ARGS}})
+mappings=
+
+[Literal]
+template={{VALUE}}
+mappings=
+
+[Block]
+template={{BODY}}
+mappings=
+
+[Return]
+template=return {{VALUE}};
+mappings=
+
+[If]
+template=if ({{CONDITION}}) {{THEN_BRANCH}} else {{ELSE_BRANCH}}
+mappings=
+
+[While]
+template=while ({{CONDITION}}) {{BODY}}
+mappings=
+
+[For]
+template=for ({{INIT}}; {{CONDITION}}; {{INCREMENT}}) {{BODY}}
+mappings=

@@ -34,7 +34,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 72,
+				"line" : 74,
 				"parent" : 0
 			},
 			{
@@ -46,13 +46,13 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 52,
+				"line" : 54,
 				"parent" : 0
 			},
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 62,
+				"line" : 64,
 				"parent" : 0
 			}
 		]
@@ -108,7 +108,9 @@
 				9,
 				10,
 				11,
-				12
+				12,
+				13,
+				14
 			]
 		}
 	],
@@ -167,7 +169,9 @@
 				9,
 				10,
 				11,
-				12
+				12,
+				13,
+				14
 			]
 		}
 	],
@@ -249,6 +253,18 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/ir/Lowering.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/codegen/GenericCodeGenerator.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/codegen/RuleParser.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

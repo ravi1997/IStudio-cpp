@@ -21,6 +21,20 @@
 #include "istudio/Token.h"
 #include "ir/Lowering.h"
 #include "ir/IR.h"
+#include "codegen/CodeGenerator.h"
+#include "codegen/CCodeGenerator.h"
+#include "codegen/CppCodeGenerator.h"
+#include "codegen/JavaCodeGenerator.h"
+#include "codegen/PythonCodeGenerator.h"
+#include "codegen/GenericCodeGenerator.h"
+#include "codegen/RuleParser.h"
+#include "codegen/CodeGenerator.h"
+#include "codegen/CCodeGenerator.h"
+#include "codegen/CppCodeGenerator.h"
+#include "codegen/JavaCodeGenerator.h"
+#include "codegen/PythonCodeGenerator.h"
+#include "codegen/GenericCodeGenerator.h"
+#include "codegen/RuleParser.h"
 namespace {
 
 struct DemoConfig {
@@ -363,6 +377,7 @@ struct CommandLineOptions {
     std::string projectFile{};
     std::string standard{};
     std::string outputPath{};
+    std::string targetLanguage{};  // New field for target language
     std::string errorMessage{};
     std::vector<std::string> positional;
 };
@@ -447,6 +462,14 @@ CommandLineOptions parseCommandLine(int argc, char* argv[])
             opts.outputPath = argv[++i];
             continue;
         }
+        if (arg == "--target" || arg == "-tl") {  // New flag for target language
+            if (i + 1 >= argc) {
+                opts.errorMessage = "Missing value for --target";
+                return opts;
+            }
+            opts.targetLanguage = argv[++i];
+            continue;
+        }
 
         if (arg == "compile" || arg == "run" || arg == "lex-samples") {
             opts.command = arg;
@@ -504,23 +527,24 @@ CommandLineOptions parseCommandLine(int argc, char* argv[])
 
 void printUsage(const std::string& executable)
 {
-    std::cout << "Usage:\n"
-              << "  " << executable << " compile <source> [--grammar file] [--translation file] [options]\n"
-              << "  " << executable << " run [--project file] [options]\n"
-              << "  " << executable << " lex-samples [--grammar file]\n"
-              << "  " << executable << " --demo\n"
-              << "  " << executable << " --stdin [--grammar file] [--translation file]\n"
-              << "  " << executable << " --help | --version\n"
-              << "Options:\n"
-              << "  --verbose, -v            Enable verbose logging\n"
-              << "  --grammar, -g <file>     Override grammar rules file\n"
-              << "  --translation, -t <file> Override translation rules file\n"
-              << "  --project, -p <file>     Specify project manifest for run command (default: ./ipl_project.ini)\n"
-              << "  --standard, -s <name>    Select grammar standard (e.g. ipl)\n"
-              << "  --output, -o <path>      Output path for future phases (currently informational)\n"
-              << "  --emit-sema              Run semantic analysis and print symbol summary\n"
-              << "  --emit-ir                Emit intermediate representation (planned feature)\n"
-              << "  --lex-ipl-samples        Tokenize bundled IPL samples\n";
+    std::cout << "Usage:\\n"
+              << "  " << executable << " compile <source> [--grammar file] [--translation file] [options]\\n"
+              << "  " << executable << " run [--project file] [options]\\n"
+              << "  " << executable << " lex-samples [--grammar file]\\n"
+              << "  " << executable << " --demo\\n"
+              << "  " << executable << " --stdin [--grammar file] [--translation file]\\n"
+              << "  " << executable << " --help | --version\\n"
+              << "Options:\\n"
+              << "  --verbose, -v            Enable verbose logging\\n"
+              << "  --grammar, -g <file>     Override grammar rules file\\n"
+              << "  --translation, -t <file> Override translation rules file\\n"
+              << "  --project, -p <file>     Specify project manifest for run command (default: ./ipl_project.ini)\\n"
+              << "  --standard, -s <name>    Select grammar standard (e.g. ipl)\\n"
+              << "  --output, -o <path>      Output path for generated code\\n"
+              << "  --target, -tl <lang>     Target language for code generation (c, cpp, java, python)\\n"
+              << "  --emit-sema              Run semantic analysis and print symbol summary\\n"
+              << "  --emit-ir                Emit intermediate representation (planned feature)\\n"
+              << "  --lex-ipl-samples        Tokenize bundled IPL samples\\n";
 }
 
 void printVersion()
@@ -539,16 +563,27 @@ public:
     bool compileWithConfig(const std::string& sourceCodeFile,
                            const std::string& grammarFile,
                            const std::string& translationFile);
+    bool compileWithTarget(const std::string& sourceCodeFile,
+                           const std::string& grammarFile,
+                           const std::string& translationFile,
+                           const std::string& targetLanguage,
+                           const std::string& outputPath);
 
 private:
     bool compileInternal(std::string_view source,
                          istudio::LexerOptions lexerOptions,
                          const std::vector<TranslationRule>& translationRules);
+    bool compileWithCodegen(std::string_view source,
+                            istudio::LexerOptions lexerOptions,
+                            const std::vector<TranslationRule>& translationRules,
+                            const std::string& targetLanguage,
+                            const std::string& outputPath);
 
     void indexAST(const ASTNode& node);
     void printSymbolSummary() const;
     void printSemanticSummary(const istudio::semantic::SymbolScope::Ptr& scope, int indent) const;
     static std::string symbolTypeToString(SymbolType type);
+    std::unique_ptr<istudio::codegen::CodeGenerator> createCodeGenerator(const std::string& targetLanguage);
 
     SymbolTable symbolTable_;
     bool verbose_{false};
@@ -571,47 +606,8 @@ bool Compiler::compileWithConfig(const std::string& sourceCodeFile,
                                  const std::string& grammarFile,
                                  const std::string& translationFile)
 {
-    if (verbose_) {
-        std::cout << "Starting compilation with configuration...\n";
-    }
-
-    Config config;
-
-    if (!config.loadSourceCode(sourceCodeFile)) {
-        std::cout << "Error: Could not load source code file: " << sourceCodeFile << std::endl;
-        return false;
-    }
-
-    if (!config.loadGrammarFile(grammarFile)) {
-        std::cout << "Error: Could not load grammar file: " << grammarFile << std::endl;
-        return false;
-    }
-
-    if (!config.loadTranslationRules(translationFile)) {
-        std::cout << "Error: Could not load translation rules file: " << translationFile << std::endl;
-        return false;
-    }
-
-    if (verbose_) {
-        std::cout << "Loaded " << config.getGrammarRules().size() << " grammar rules\n";
-        std::cout << "Loaded " << config.getTranslationRules().size() << " translation rules\n";
-    }
-
-    auto lexerOptions = makeLexerOptions(config.getGrammarRules());
-    if (!compileInternal(config.getSourceCode(), lexerOptions, config.getTranslationRules())) {
-        return false;
-    }
-
-    if (verbose_ && !config.getTranslationRules().empty()) {
-        std::cout << "Applying translation rules:\n";
-        for (const auto& rule : config.getTranslationRules()) {
-            std::cout << "  " << rule.from_language << " -> " << rule.to_language
-                      << ": " << rule.rule << std::endl;
-        }
-    }
-
-    std::cout << "Compilation with configuration completed successfully!\n";
-    return true;
+    // For backward compatibility, call compileWithTarget with empty target language and output path
+    return compileWithTarget(sourceCodeFile, grammarFile, translationFile, "", "");
 }
 
 bool Compiler::compileInternal(std::string_view source,
@@ -876,6 +872,173 @@ std::string Compiler::symbolTypeToString(SymbolType type)
     return "unknown";
 }
 
+std::unique_ptr<istudio::codegen::CodeGenerator> Compiler::createCodeGenerator(const std::string& targetLanguage)
+{
+    // Check if target language is one of the traditional ones
+    if (targetLanguage == "c" || targetLanguage == "C") {
+        return std::make_unique<istudio::codegen::CCodeGenerator>();
+    } else if (targetLanguage == "cpp" || targetLanguage == "C++") {
+        return std::make_unique<istudio::codegen::CppCodeGenerator>();
+    } else if (targetLanguage == "java" || targetLanguage == "Java") {
+        return std::make_unique<istudio::codegen::JavaCodeGenerator>();
+    } else if (targetLanguage == "python" || targetLanguage == "Python") {
+        return std::make_unique<istudio::codegen::PythonCodeGenerator>();
+    } else {
+        // For any other language, use the generic code generator
+        // By default, look for a rule file named after the language
+        std::string ruleFilePath = "rules/" + targetLanguage + ".rules";
+        auto rules = istudio::codegen::RuleParser::parseFromFile(ruleFilePath);
+        
+        auto generator = std::make_unique<istudio::codegen::GenericCodeGenerator>(targetLanguage);
+        generator->loadRules(rules);
+        return generator;
+    }
+}
+
+bool Compiler::compileWithTarget(const std::string& sourceCodeFile,
+                                 const std::string& grammarFile,
+                                 const std::string& translationFile,
+                                 const std::string& targetLanguage,
+                                 const std::string& outputPath)
+{
+    if (verbose_) {
+        std::cout << "Starting compilation with target language: " << targetLanguage << std::endl;
+    }
+
+    Config config;
+
+    if (!config.loadSourceCode(sourceCodeFile)) {
+        std::cout << "Error: Could not load source code file: " << sourceCodeFile << std::endl;
+        return false;
+    }
+
+    if (!config.loadGrammarFile(grammarFile)) {
+        std::cout << "Error: Could not load grammar file: " << grammarFile << std::endl;
+        return false;
+    }
+
+    if (!config.loadTranslationRules(translationFile)) {
+        std::cout << "Error: Could not load translation rules file: " << translationFile << std::endl;
+        return false;
+    }
+
+    if (verbose_) {
+        std::cout << "Loaded " << config.getGrammarRules().size() << " grammar rules\\n";
+        std::cout << "Loaded " << config.getTranslationRules().size() << " translation rules\\n";
+    }
+
+    auto lexerOptions = makeLexerOptions(config.getGrammarRules());
+    
+    std::vector<TranslationRule> translationRules = config.getTranslationRules();
+    
+    return compileWithCodegen(config.getSourceCode(), lexerOptions, translationRules, targetLanguage, outputPath);
+}
+
+bool Compiler::compileWithCodegen(std::string_view source,
+                                  istudio::LexerOptions lexerOptions,
+                                  const std::vector<TranslationRule>& translationRules,
+                                  const std::string& targetLanguage,
+                                  const std::string& outputPath)
+{
+    std::size_t stdlibCount = 0;
+    if (!loadStandardLibraryTokens(lexerOptions, stdlibCount, verbose_)) {
+        return false;
+    }
+
+    auto lexResult = lexSourceToTokens(source, lexerOptions);
+    if (!lexResult) {
+        printDiagnostics(lexResult.error());
+        return false;
+    }
+
+    auto tokens = std::move(lexResult.value());
+    const std::size_t userCount = tokens.size();
+
+    if (verbose_) {
+        std::cout << "Lexical analysis produced " << userCount << " tokens ("
+                  << stdlibCount << " from standard library)\\n";
+    }
+
+    Parser parser(std::move(tokens));
+    auto ast = parser.parse();
+    if (parser.hadError()) {
+        std::cout << "Parsing encountered errors.\\n";
+        return false;
+    }
+
+    if (!ast) {
+        std::cout << "Failed to generate AST\\n";
+        return false;
+    }
+
+    if (verbose_) {
+        std::cout << "Abstract Syntax Tree generated:\\n";
+        ast->print();
+    }
+
+    semantic::SemanticAnalyzer analyzer({.verbose = verbose_});
+    istudio::DiagnosticEngine semaDiagnostics;
+    if (!analyzer.analyze(*ast, semaDiagnostics)) {
+        printDiagnostics(semaDiagnostics.getDiagnostics());
+        return false;
+    }
+
+    if (emitSemanticSummary_) {
+        std::cout << "\\nSemantic summary:\\n";
+        printSemanticSummary(analyzer.globalScope(), 0);
+    }
+
+    symbolTable_.clear();
+    indexAST(*ast);
+    printSymbolSummary();
+
+    // Apply translation rules if provided
+    if (!translationRules.empty() && verbose_) {
+        std::cout << "\\nTranslation rules applied:\\n";
+        for (const auto& rule : translationRules) {
+            std::cout << "  " << rule.from_language << " -> " << rule.to_language
+                      << ": " << rule.rule << std::endl;
+        }
+    }
+
+    // Generate code for the target language
+    if (!targetLanguage.empty()) {
+        auto codeGenerator = createCodeGenerator(targetLanguage);
+        if (!codeGenerator) {
+            std::cout << "Error: Could not create code generator for target language: " 
+                      << targetLanguage << std::endl;
+            return false;
+        }
+
+        std::string generatedCode = codeGenerator->generate(*ast);
+        
+        // Write the generated code to the output file
+        if (!outputPath.empty()) {
+            std::ofstream outputFile(outputPath);
+            if (outputFile.is_open()) {
+                outputFile << generatedCode;
+                outputFile.close();
+                std::cout << "Generated code written to: " << outputPath << std::endl;
+            } else {
+                std::cout << "Error: Could not write to output file: " << outputPath << std::endl;
+                return false;
+            }
+        } else {
+            std::cout << "Generated code:\\n" << generatedCode << std::endl;
+        }
+    }
+
+    // Emit IR if requested (placeholder - IR system not yet implemented)
+    if (emitIr_) {
+        std::cout << "\\nIntermediate Representation (IR) emission:\\n";
+        std::cout << "  [Note: IR system is planned for future implementation]\\n";
+        std::cout << "  [IR would be generated from AST with type annotations]\\n";
+        std::cout << "  [See docs/roadmap_semantic_ir_codegen.md for details]\\n";
+    }
+
+    return true;
+}
+
 int main(int argc, char* argv[])
 {
     std::cout << "IStudio - Impossible Programming Language (IPL) Compiler\n" << std::endl;
@@ -1022,7 +1185,14 @@ int main(int argc, char* argv[])
             return 1;
         }
 
-        return compiler.compileWithConfig(options.sourceFile, grammar.string(), translation.string()) ? 0 : 1;
+        // If a target language is specified, use the new code generation method
+        if (!options.targetLanguage.empty()) {
+            return compiler.compileWithTarget(options.sourceFile, grammar.string(), 
+                                              translation.string(), options.targetLanguage, 
+                                              options.outputPath) ? 0 : 1;
+        } else {
+            return compiler.compileWithConfig(options.sourceFile, grammar.string(), translation.string()) ? 0 : 1;
+        }
     }
 
     const char* runTest = std::getenv("RUN_COMPILER_TEST");

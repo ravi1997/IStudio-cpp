@@ -356,6 +356,54 @@ src/Symbol.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IStudio.dir/build.make CMakeFiles/IStudio.dir/src/Symbol.cpp.s
 .PHONY : src/Symbol.cpp.s
 
+src/codegen/GenericCodeGenerator.o: src/codegen/GenericCodeGenerator.cpp.o
+.PHONY : src/codegen/GenericCodeGenerator.o
+
+# target to build an object file
+src/codegen/GenericCodeGenerator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IStudio.dir/build.make CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.o
+.PHONY : src/codegen/GenericCodeGenerator.cpp.o
+
+src/codegen/GenericCodeGenerator.i: src/codegen/GenericCodeGenerator.cpp.i
+.PHONY : src/codegen/GenericCodeGenerator.i
+
+# target to preprocess a source file
+src/codegen/GenericCodeGenerator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IStudio.dir/build.make CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.i
+.PHONY : src/codegen/GenericCodeGenerator.cpp.i
+
+src/codegen/GenericCodeGenerator.s: src/codegen/GenericCodeGenerator.cpp.s
+.PHONY : src/codegen/GenericCodeGenerator.s
+
+# target to generate assembly for a file
+src/codegen/GenericCodeGenerator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IStudio.dir/build.make CMakeFiles/IStudio.dir/src/codegen/GenericCodeGenerator.cpp.s
+.PHONY : src/codegen/GenericCodeGenerator.cpp.s
+
+src/codegen/RuleParser.o: src/codegen/RuleParser.cpp.o
+.PHONY : src/codegen/RuleParser.o
+
+# target to build an object file
+src/codegen/RuleParser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IStudio.dir/build.make CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.o
+.PHONY : src/codegen/RuleParser.cpp.o
+
+src/codegen/RuleParser.i: src/codegen/RuleParser.cpp.i
+.PHONY : src/codegen/RuleParser.i
+
+# target to preprocess a source file
+src/codegen/RuleParser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IStudio.dir/build.make CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.i
+.PHONY : src/codegen/RuleParser.cpp.i
+
+src/codegen/RuleParser.s: src/codegen/RuleParser.cpp.s
+.PHONY : src/codegen/RuleParser.s
+
+# target to generate assembly for a file
+src/codegen/RuleParser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IStudio.dir/build.make CMakeFiles/IStudio.dir/src/codegen/RuleParser.cpp.s
+.PHONY : src/codegen/RuleParser.cpp.s
+
 src/ipl_compiler/ipl_compiler.o: src/ipl_compiler/ipl_compiler.cpp.o
 .PHONY : src/ipl_compiler/ipl_compiler.o
 
@@ -605,6 +653,12 @@ help:
 	@echo "... src/Symbol.o"
 	@echo "... src/Symbol.i"
 	@echo "... src/Symbol.s"
+	@echo "... src/codegen/GenericCodeGenerator.o"
+	@echo "... src/codegen/GenericCodeGenerator.i"
+	@echo "... src/codegen/GenericCodeGenerator.s"
+	@echo "... src/codegen/RuleParser.o"
+	@echo "... src/codegen/RuleParser.i"
+	@echo "... src/codegen/RuleParser.s"
 	@echo "... src/ipl_compiler/ipl_compiler.o"
 	@echo "... src/ipl_compiler/ipl_compiler.i"
 	@echo "... src/ipl_compiler/ipl_compiler.s"
